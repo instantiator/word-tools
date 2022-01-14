@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Management.Automation;
 
 namespace WordToolsCmdlet
@@ -12,13 +13,10 @@ namespace WordToolsCmdlet
 
         protected override void ProcessRecord()
         {
-            var dictionary = new[]
+            foreach (string line in File.ReadLines(Path))
             {
-                Word.JustText("aardvark"),
-                Word.JustText("abacus"),
-            };
-
-            WriteObject(dictionary, true);
+                WriteObject(Word.JustText(line.Trim()));
+            }
         }
     }
 }
