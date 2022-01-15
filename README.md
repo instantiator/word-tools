@@ -4,10 +4,13 @@ PowerShell tools for puzzle solving.
 
 ## Prerequisites (OS X)
 
-Install the following:
+* Install [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2)
 
-* [Homebrew](https://brew.sh/)
-* [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2)
+This can be done easily with [Homebrew](https://brew.sh/) package manager on OS X:
+
+```bash
+brew install --cask powershell
+```
 
 This repository contains an English words list as submodule `english-words`. Either clone this repository, or clone [dwyl/english-words](https://github.com/dwyl/english-words) directly:
 
