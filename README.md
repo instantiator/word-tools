@@ -4,9 +4,7 @@ PowerShell tools for puzzle solving.
 
 ## Prerequisites (OS X)
 
-* Install [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2)
-
-This can be done easily with [Homebrew](https://brew.sh/) package manager on OS X:
+Install [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2). This can be done easily with [Homebrew](https://brew.sh/) package manager on OS X:
 
 ```bash
 brew install --cask powershell
