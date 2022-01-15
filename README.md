@@ -47,14 +47,35 @@ Read the word-list, and filter to all words of length 4:
 > Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Length 4
 ```
 
-Read the word-list, and filter to all words matching crossword rule z??c:
+Read the word-list, and filter to all words matching crossword rule `z??c`:
 
 ```powershell
 > Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Crossword z??c
 ```
 
-Read the word-list, and filter by [regular expression](https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference):
+Read the word-list, and filter to all words matching [regular expression](https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference) `^[ab][ab].+d$`:
 
 ```powershell
-> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -RegularExpression ^[ab][ab].+d$
+> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Regex ^[ab][ab].+d$
 ```
+
+Read the word-list, and filter to the word matching simple anagram `rcleve`:
+
+```powershell
+> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rcleve
+```
+
+
+Read the word-list, and filter to the word matching partial anagram `rcleve?`:
+
+```powershell
+> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rclev?
+```
+
+Read the word-list, filter to the word matching partial anagram `rcleve?`, and filter again to those matching crossword rule `?love?`:
+
+```powershell
+> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rclev? | Limit-Words -Crossword ?love?
+```
+
+🍀

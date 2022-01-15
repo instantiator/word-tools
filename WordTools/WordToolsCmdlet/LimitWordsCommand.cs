@@ -16,7 +16,13 @@ namespace WordToolsCmdlet
         public string Crossword { get; set; }
 
         [Parameter]
-        public string RegularExpression { get; set; }
+        public string Regex { get; set; }
+
+        [Parameter]
+        public string Contains { get; set; }
+
+        [Parameter]
+        public string Anagram { get; set; }
 
         [Parameter(ValueFromPipeline = true)]
         public Word Word { get; set; }
@@ -25,36 +31,67 @@ namespace WordToolsCmdlet
         {
             var word = Word.Text?.ToLower().Trim();
             var crossword = Crossword?.ToLower().Trim();
+            var contains = Contains?.ToLower().Trim();
+            var anagram = Anagram?.ToLower().Trim();
 
-            if ((Length == null || MatchesLength(Word, Length.Value)) &&
-                (Crossword == null || MatchesCrossword(Word, Crossword)) &&
-                (RegularExpression == null || MatchesRegex(Word, RegularExpression)))
+            if ((Word != null && Word.Text != null) &&
+                (Length == null || MatchesLength(word, Length.Value)) &&
+                (Crossword == null || MatchesCrossword(word, crossword)) &&
+                (Regex == null || MatchesRegex(word, Regex)) &&
+                (Contains == null || DoesContain(word, contains)) &&
+                (Anagram == null || MatchesAnagram(word, anagram)))
             {
                 WriteObject(Word);
             }
         }
 
-        public bool MatchesLength(Word word, int length)
+        public bool MatchesLength(string word, int length)
         {
-            return length == word?.Text?.Length;
+            return length == word?.Length;
         }
 
-        public bool MatchesCrossword(Word word, string crossword)
+        public bool MatchesCrossword(string word, string crossword)
         {
             if (string.IsNullOrWhiteSpace(crossword)) { return false; }
-            if (word.Text.Length != crossword.Length) { return false; }
-            for (var i = 0; i < word.Text.Length; i++)
+            if (word.Length != crossword.Length) { return false; }
+            for (var i = 0; i < word.Length; i++)
             {
-                if (word.Text[i] != crossword[i] && crossword[i] != '?') { return false; }
+                if (word[i] != crossword[i] && crossword[i] != '?') { return false; }
             }
             return true;
         }
 
-        public bool MatchesRegex(Word word, string regex)
+        public bool MatchesRegex(string word, string regex)
         {
             if (string.IsNullOrWhiteSpace(regex)) { return false; }
-            Regex r = new Regex(regex);
-            return r.IsMatch(word?.Text);
+            var r = new Regex(regex);
+            return r.IsMatch(word);
+        }
+
+        public bool MatchesAnagram(string word, string anagram)
+        {
+            if (string.IsNullOrWhiteSpace(anagram)) { return false; }
+            if (word.Length != anagram.Length) { return false; }
+
+            var wordChars = word.ToList();
+            var anagChars = anagram.ToList();
+
+            int matched = anagChars.Count(c => c == '?');
+            foreach (var c in wordChars)
+            {
+                if (anagChars.Contains(c))
+                {
+                    anagChars.RemoveAt(anagChars.IndexOf(c));
+                    matched++;
+                }
+            }
+            return matched == word.Length;
+        }
+
+        public bool DoesContain(string word, string str)
+        {
+            if (string.IsNullOrWhiteSpace(str)) { return false; }
+            return word.Contains(str);
         }
     }
 }
