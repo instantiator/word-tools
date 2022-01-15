@@ -41,10 +41,16 @@ Read the word-list included in submodule `english-words` (from [dwyl/english-wor
 > Read-Words -Path ./english-words/words_alpha.txt
 ```
 
-Read the word-list, and filter to all words of length 4:
+Read the word-list, and filter to all words of length `4`:
 
 ```powershell
 > Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Length 4
+```
+
+Read the word-list, and filter to all words containing `love`:
+
+```powershell
+> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Contains love
 ```
 
 Read the word-list, and filter to all words matching crossword rule `z??c`:
