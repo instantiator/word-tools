@@ -4,17 +4,33 @@ PowerShell tools for puzzle solving.
 
 ## Prerequisites (OS X)
 
-[Install](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2) and launch PowerShell:
+[Install](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2) PowerShell:
 
 ```bash
 $ brew install --cask powershell
+```
+
+This repository contains an English words list as submodule `english-words`. Either clone this repository, or clone [dwyl/english-words](https://github.com/dwyl/english-words) directly:
+
+```bash
+git clone https://github.com/instantiator/word-tools.git
+git clone https://github.com/dwyl/english-words.git
+```
+
+Download the module `WordToolsCmdlet.dll` release:
+
+* [Latest release](https://github.com/instantiator/word-tools/releases/latest)
+
+Start PowerShell:
+
+```bash
 $ pwsh
 ```
 
-Import the module:
+Import the module into PowerShell:
 
 ```powershell
-PS word-tools> Import-Module ./WordToolsCmdlet.dll
+> Import-Module ./WordToolsCmdlet.dll
 ```
 
 ## Simple queries
@@ -22,23 +38,23 @@ PS word-tools> Import-Module ./WordToolsCmdlet.dll
 Read the word-list included in submodule `english-words` (from [dwyl/english-words](https://github.com/dwyl/english-words)):
 
 ```powershell
-PS word-tools>  Read-Words -Path ./english-words/words_alpha.txt
+> Read-Words -Path ./english-words/words_alpha.txt
 ```
 
 Read the word-list, and filter to all words of length 4:
 
 ```powershell
-PS word-tools>  Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Length 4
+> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Length 4
 ```
 
 Read the word-list, and filter to all words matching crossword rule z??c:
 
 ```powershell
-PS word-tools>  Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Crossword z??c
+> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Crossword z??c
 ```
 
-Read the word-list, and filter to all 
+Read the word-list, and filter by [regular expression](https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference):
 
 ```powershell
-PS word-tools> word-tools> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -RegularExpression ^[ab][ab].+d$
+> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -RegularExpression ^[ab][ab].+d$
 ```
