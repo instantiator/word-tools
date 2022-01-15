@@ -30,7 +30,7 @@ $ pwsh
 Import the module into PowerShell:
 
 ```powershell
-> Import-Module ./WordToolsCmdlet.dll
+Import-Module ./WordToolsCmdlet.dll
 ```
 
 ## Simple queries
@@ -38,50 +38,50 @@ Import the module into PowerShell:
 Read the word-list included in submodule `english-words` (from [dwyl/english-words](https://github.com/dwyl/english-words)):
 
 ```powershell
-> Read-Words -Path ./english-words/words_alpha.txt
+Read-Words -Path ./english-words/words_alpha.txt
 ```
 
 Read the word-list, and filter to all words of length `4`:
 
 ```powershell
-> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Length 4
+Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Length 4
 ```
 
 Read the word-list, and filter to all words containing `love`:
 
 ```powershell
-> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Contains love
+Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Contains love
 ```
 
 Read the word-list, and filter to all words matching crossword rule `z??c`:
 
 ```powershell
-> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Crossword z??c
+Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Crossword z??c
 ```
 
 Read the word-list, and filter to all words matching [regular expression](https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference) `^[ab][ab].+d$`:
 
 ```powershell
-> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Regex ^[ab][ab].+d$
+Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Regex ^[ab][ab].+d$
 ```
 
 Read the word-list, and filter to the word matching simple anagram `rcleve`:
 
 ```powershell
-> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rcleve
+Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rcleve
 ```
 
 
 Read the word-list, and filter to the word matching partial anagram `rcleve?`:
 
 ```powershell
-> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rclev?
+Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rclev?
 ```
 
 Read the word-list, filter to the word matching partial anagram `rcleve?`, and filter again to those matching crossword rule `?love?`:
 
 ```powershell
-> Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rclev? | Limit-Words -Crossword ?love?
+Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rclev? | Limit-Words -Crossword ?love?
 ```
 
 🍀
