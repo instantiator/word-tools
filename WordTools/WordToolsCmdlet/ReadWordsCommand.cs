@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace WordToolsCmdlet
 {
-    [Cmdlet(VerbsCommunications.Read, "Dictionary")]
+    [Cmdlet(VerbsCommunications.Read, "Words")]
     [OutputType(typeof(Word))]
     public class ReadWordsCommand : Cmdlet
     {
