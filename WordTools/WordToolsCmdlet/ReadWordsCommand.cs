@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Management.Automation;
+using WordToolsCmdlet.DTO;
 
 namespace WordToolsCmdlet
 {
     [Cmdlet(VerbsCommunications.Read, "Words")]
-    [OutputType(typeof(Word))]
+    [OutputType(typeof(IWord))]
     public class ReadWordsCommand : Cmdlet
     {
         [Parameter(Mandatory = true)]
@@ -15,7 +16,7 @@ namespace WordToolsCmdlet
         {
             foreach (string line in File.ReadLines(Path))
             {
-                WriteObject(Word.JustText(line.Trim()));
+                WriteObject(new SimpleWord(line.Trim()));
             }
         }
     }

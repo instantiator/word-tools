@@ -84,4 +84,22 @@ Read the word-list, filter to the word matching partial anagram `rcleve?`, and f
 Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rclev? | Limit-Words -Crossword ?love?
 ```
 
-🍀
+Read the word-list, filter to words that could match given ciphertext `dbu` using a Caesar cipher:
+
+```powershell
+Read-Words -Path ./english-words/words_alpha.txt | Limit-ByCipher -CipherText dbu -Algorithm caesar
+```
+
+Read the word-list, filter to words that could match given ciphertext `dbu` using a Caesar cipher, specifically with key `25`:
+
+```powershell
+Read-Words -Path ./english-words/words_alpha.txt | Limit-ByCipher -CipherText dbu -Algorithm caesar -Key 25
+```
+
+Good luck! 🍀
+
+## TODOs
+
+- [ ] Add word deciphering filter.
+- [ ] Explore use of [WordNet](https://wordnet.princeton.edu/download/current-version) and include definitions and semantics for cool new filters.
+

@@ -2,11 +2,12 @@
 using System.Linq;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
+using WordToolsCmdlet.DTO;
 
 namespace WordToolsCmdlet
 {
     [Cmdlet(VerbsData.Limit, "Words")]
-    [OutputType(typeof(Word))]
+    [OutputType(typeof(IWord))]
     public class LimitWordsCommand : Cmdlet
     {
         [Parameter]
@@ -25,7 +26,7 @@ namespace WordToolsCmdlet
         public string Anagram { get; set; }
 
         [Parameter(ValueFromPipeline = true)]
-        public Word Word { get; set; }
+        public IWord Word { get; set; }
 
         protected override void ProcessRecord()
         {
@@ -45,12 +46,12 @@ namespace WordToolsCmdlet
             }
         }
 
-        public bool MatchesLength(string word, int length)
+        public static bool MatchesLength(string word, int length)
         {
             return length == word?.Length;
         }
 
-        public bool MatchesCrossword(string word, string crossword)
+        public static bool MatchesCrossword(string word, string crossword)
         {
             if (string.IsNullOrWhiteSpace(crossword)) { return false; }
             if (word.Length != crossword.Length) { return false; }
@@ -61,14 +62,14 @@ namespace WordToolsCmdlet
             return true;
         }
 
-        public bool MatchesRegex(string word, string regex)
+        public static bool MatchesRegex(string word, string regex)
         {
             if (string.IsNullOrWhiteSpace(regex)) { return false; }
             var r = new Regex(regex);
             return r.IsMatch(word);
         }
 
-        public bool MatchesAnagram(string word, string anagram)
+        public static bool MatchesAnagram(string word, string anagram)
         {
             if (string.IsNullOrWhiteSpace(anagram)) { return false; }
             if (word.Length != anagram.Length) { return false; }
@@ -88,7 +89,7 @@ namespace WordToolsCmdlet
             return matched == word.Length;
         }
 
-        public bool DoesContain(string word, string str)
+        public static bool DoesContain(string word, string str)
         {
             if (string.IsNullOrWhiteSpace(str)) { return false; }
             return word.Contains(str);

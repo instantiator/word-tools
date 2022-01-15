@@ -6,8 +6,12 @@
 
   <ItemGroup>
     <None Remove="PowerShellStandard.Library" />
+    <None Remove="DTO\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTO\" />
   </ItemGroup>
 </Project>
