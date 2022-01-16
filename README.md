@@ -33,9 +33,51 @@ Import the module into PowerShell:
 Import-Module ./WordToolsCmdlet.dll
 ```
 
-## Simple queries: filtering word lists
+## Simple queries
 
-**NB.** Parameter names are not case sensitive, eg. `-WordList` and `-wordlist` are equivalent.
+This PowerShell module provides the following commands:
+
+* `Import-Words` adds additional words into the pipeline, either from a list provided or a word list file.
+
+```
+Import-Words
+  [-WordList 'one', 'two', 'three', ...]
+  [-WordListPath <path>]
+```
+
+* `Select-Words` filters words in the pipeline by a number of different criteria.
+
+```
+Select-Words
+  [-length <len>]
+  [-crossword <pattern>]
+  [-regex <regex>]
+  [-contains <string>]
+  [-anagram <anagram>]
+  [-palindrome <$true|$false>]
+  [-WordList 'one', 'two', 'three', ...]
+  [-WordListPath <path>]`
+```
+
+* `Unprotect-Ciphertext` attempts to decipher each ciphertext to a word found in the wordlist provided.
+
+```
+Unprotect-Ciphertext 
+  -algorithm caesar
+  [-key <key>]
+  [-WordList 'one', 'two', 'three', ...]
+  [-WordListPath <path>]`
+```
+
+* `Join-Words` creates a phrase for every permutation of the words in the pipeline.
+
+```
+Join-Words
+```
+
+**NB. Parameter names are not case sensitive.** ie. `-WordList` and `-wordlist` are equivalent.
+
+### Filtering word lists
 
 ```powershell
 Import-Words -WordListPath ./english-words/words_alpha.txt -WordList 'extrawords','gohere'
@@ -173,6 +215,8 @@ Text
 nice
 words
 ```
+
+### Deciphering
 
 ```powershell
 Import-Words -WordList 'dbu' | Unprotect-Ciphertext -Algorithm caesar -WordListPath ./english-words/words_alpha.txt
