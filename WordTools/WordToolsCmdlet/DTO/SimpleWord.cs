@@ -9,5 +9,15 @@ namespace WordToolsCmdlet.DTO
         }
 
         public string Text { get; private set; }
+
+        public int CompareTo(object obj)
+        {
+            return Text.CompareTo((obj as IWord)?.Text);
+        }
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }

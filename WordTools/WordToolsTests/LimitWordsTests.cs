@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WordToolsCmdlet;
+using WordToolsCmdlet.Helpers;
 
 namespace WordToolsTests
 {
@@ -9,23 +10,23 @@ namespace WordToolsTests
         [TestMethod]
         public void TestAnagramMatching()
         {
-            Assert.IsTrue(LimitWordsCommand.MatchesAnagram("abcdefg", "gfedcba"));
+            Assert.IsTrue(WordHelper.MatchesAnagram("abcdefg", "gfedcba"));
 
-            Assert.IsFalse(LimitWordsCommand.MatchesAnagram("abcdefg", "gfedxxx"));
-            Assert.IsFalse(LimitWordsCommand.MatchesAnagram("abcdefg", "abc"));
+            Assert.IsFalse(WordHelper.MatchesAnagram("abcdefg", "gfedxxx"));
+            Assert.IsFalse(WordHelper.MatchesAnagram("abcdefg", "abc"));
 
-            Assert.IsTrue(LimitWordsCommand.MatchesAnagram("abcdefg", "abcdef?"));
-            Assert.IsTrue(LimitWordsCommand.MatchesAnagram("abcdefg", "gfedcb?"));
-            Assert.IsTrue(LimitWordsCommand.MatchesAnagram("abcdefg", "g??????"));
+            Assert.IsTrue(WordHelper.MatchesAnagram("abcdefg", "abcdef?"));
+            Assert.IsTrue(WordHelper.MatchesAnagram("abcdefg", "gfedcb?"));
+            Assert.IsTrue(WordHelper.MatchesAnagram("abcdefg", "g??????"));
 
-            Assert.IsFalse(LimitWordsCommand.MatchesAnagram("abcdefg", "abcdex?"));
-            Assert.IsFalse(LimitWordsCommand.MatchesAnagram("abcdefg", "gfedcx?"));
-            Assert.IsFalse(LimitWordsCommand.MatchesAnagram("abcdefg", "abc?"));
+            Assert.IsFalse(WordHelper.MatchesAnagram("abcdefg", "abcdex?"));
+            Assert.IsFalse(WordHelper.MatchesAnagram("abcdefg", "gfedcx?"));
+            Assert.IsFalse(WordHelper.MatchesAnagram("abcdefg", "abc?"));
 
-            Assert.IsTrue(LimitWordsCommand.MatchesAnagram("clever", "rcleve"));
-            Assert.IsTrue(LimitWordsCommand.MatchesAnagram("clever", "rclev?"));
-            Assert.IsFalse(LimitWordsCommand.MatchesAnagram("clever", "zer"));
-            Assert.IsFalse(LimitWordsCommand.MatchesAnagram("clever", "well"));
+            Assert.IsTrue(WordHelper.MatchesAnagram("clever", "rcleve"));
+            Assert.IsTrue(WordHelper.MatchesAnagram("clever", "rclev?"));
+            Assert.IsFalse(WordHelper.MatchesAnagram("clever", "zer"));
+            Assert.IsFalse(WordHelper.MatchesAnagram("clever", "well"));
         }
     }
 }

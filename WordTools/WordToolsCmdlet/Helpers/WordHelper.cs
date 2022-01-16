@@ -1,51 +1,11 @@
 ﻿using System;
 using System.Linq;
-using System.Management.Automation;
 using System.Text.RegularExpressions;
-using WordToolsCmdlet.DTO;
 
-namespace WordToolsCmdlet
+namespace WordToolsCmdlet.Helpers
 {
-    [Cmdlet(VerbsData.Limit, "Words")]
-    [OutputType(typeof(IWord))]
-    public class LimitWordsCommand : Cmdlet
+    public class WordHelper
     {
-        [Parameter]
-        public int? Length { get; set; }
-
-        [Parameter]
-        public string Crossword { get; set; }
-
-        [Parameter]
-        public string Regex { get; set; }
-
-        [Parameter]
-        public string Contains { get; set; }
-
-        [Parameter]
-        public string Anagram { get; set; }
-
-        [Parameter(ValueFromPipeline = true)]
-        public IWord Word { get; set; }
-
-        protected override void ProcessRecord()
-        {
-            var word = Word.Text?.ToLower().Trim();
-            var crossword = Crossword?.ToLower().Trim();
-            var contains = Contains?.ToLower().Trim();
-            var anagram = Anagram?.ToLower().Trim();
-
-            if ((Word != null && Word.Text != null) &&
-                (Length == null || MatchesLength(word, Length.Value)) &&
-                (Crossword == null || MatchesCrossword(word, crossword)) &&
-                (Regex == null || MatchesRegex(word, Regex)) &&
-                (Contains == null || DoesContain(word, contains)) &&
-                (Anagram == null || MatchesAnagram(word, anagram)))
-            {
-                WriteObject(Word);
-            }
-        }
-
         public static bool MatchesLength(string word, int length)
         {
             return length == word?.Length;
@@ -89,10 +49,15 @@ namespace WordToolsCmdlet
             return matched == word.Length;
         }
 
-        public static bool DoesContain(string word, string str)
+        public static bool Contains(string word, string str)
         {
             if (string.IsNullOrWhiteSpace(str)) { return false; }
             return word.Contains(str);
+        }
+
+        public static bool IsPalindrome(string word)
+        {
+            return word.SequenceEqual(word.Reverse());
         }
     }
 }

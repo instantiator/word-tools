@@ -7,11 +7,16 @@
   <ItemGroup>
     <None Remove="PowerShellStandard.Library" />
     <None Remove="DTO\" />
+    <None Remove="Helpers\" />
+    <None Remove="Combinatorics" />
+    <None Remove="Combinatorics\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTO\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Combinatorics\" />
   </ItemGroup>
 </Project>

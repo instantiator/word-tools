@@ -33,73 +33,175 @@ Import the module into PowerShell:
 Import-Module ./WordToolsCmdlet.dll
 ```
 
-## Simple queries
+## Simple queries: filtering word lists
 
-Read the word-list included in submodule `english-words` (from [dwyl/english-words](https://github.com/dwyl/english-words)):
+**NB.** Parameter names are not case sensitive, eg. `-WordList` and `-wordlist` are equivalent.
 
 ```powershell
-Read-Words -Path ./english-words/words_alpha.txt
+Import-Words -WordListPath ./english-words/words_alpha.txt -WordList 'extrawords','gohere'
 ```
 
-Read the word-list, and filter to all words of length `4`:
-
-```powershell
-Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Length 4
+```text
+Text
+----
+aardvark
+...
+extrawords
+gohere
 ```
 
-Read the word-list, and filter to all words containing `love`:
-
 ```powershell
-Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Contains love
+Import-Words -WordList 'one','two','three' | Join-Words
 ```
 
-Read the word-list, and filter to all words matching crossword rule `z??c`:
-
-```powershell
-Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Crossword z??c
+```text
+Words
+-----
+{one, three, two}
+{one, two, three}
+{three, one, two}
+{three, two, one}
+{two, one, three}
+{two, three, one}
 ```
 
-Read the word-list, and filter to all words matching [regular expression](https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference) `^[ab][ab].+d$`:
-
 ```powershell
-Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Regex ^[ab][ab].+d$
+Import-Words -WordListPath ./english-words/words_alpha.txt | Select-Words -length 4
 ```
 
-Read the word-list, and filter to the word matching simple anagram `rcleve`:
-
-```powershell
-Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rcleve
+```text
+Text
+----
+...
+zuni
+zuza
 ```
 
-
-Read the word-list, and filter to the word matching partial anagram `rcleve?`:
-
 ```powershell
-Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rclev?
+Import-Words -WordListPath ./english-words/words_alpha.txt | Select-Words -crossword ?love?
 ```
 
-Read the word-list, filter to the word matching partial anagram `rcleve?`, and filter again to those matching crossword rule `?love?`:
-
-```powershell
-Read-Words -Path ./english-words/words_alpha.txt | Limit-Words -Anagram rclev? | Limit-Words -Crossword ?love?
+```text
+Text
+----
+cloven
+clover
+cloves
+gloved
+glovey
+glover
+gloves
+plover
+sloven
 ```
 
-Read the word-list, filter to words that could match given ciphertext `dbu` using a Caesar cipher:
-
 ```powershell
-Read-Words -Path ./english-words/words_alpha.txt | Limit-ByCipher -CipherText dbu -Algorithm caesar
+Import-Words -WordListPath ./english-words/words_alpha.txt | Select-Words -regex ^[cp]love.$
 ```
 
-Read the word-list, filter to words that could match given ciphertext `dbu` using a Caesar cipher, specifically with key `25`:
+```text
+Text
+----
+cloven
+clover
+cloves
+plover
+```
 
 ```powershell
-Read-Words -Path ./english-words/words_alpha.txt | Limit-ByCipher -CipherText dbu -Algorithm caesar -Key 25
+Import-Words -WordListPath ./english-words/words_alpha.txt | Select-Words -length 6 | Select-Words -contains lover
+```
+
+```text
+Text
+----
+clover
+glover
+lovery
+lovers
+plover
+```
+
+```powershell
+Import-Words -WordListPath ./english-words/words_alpha.txt | Select-Words -anagram ?rclev
+```
+
+```text
+Text
+----
+calver
+carvel
+claver
+clever
+cliver
+clover
+culver
+curvle
+velcro
+```
+
+```powershell
+Import-Words -WordListPath ./english-words/words_alpha.txt | Select-Words -anagram ?rclev | Select-Words -crossword ?love?
+```
+
+```text
+Text
+----
+clover
+```
+
+```powershell
+Import-Words -WordListPath ./english-words/words_alpha.txt | Select-Words -length 5 -palindrome $true
+```
+
+```text
+Text
+----
+...
+tenet
+tipit
+ululu
+```
+
+```powershell
+Import-Words -WordList 'some','nice','words' | Select-Words -WordList 'nice','words'
+```
+
+```text
+Text
+----
+nice
+words
+```
+
+```powershell
+Import-Words -WordList 'dbu' | Unprotect-Ciphertext -Algorithm caesar -WordListPath ./english-words/words_alpha.txt
+```
+
+```text
+Options    Text
+-------    ----
+caesar(19) wun
+caesar(25) cat
+```
+
+```powershell
+Import-Words -WordList 'dbu' | Unprotect-Ciphertext -Algorithm caesar -WordListPath ./english-words/words_alpha.txt -Key 25
+```
+
+```text
+Options    Text
+-------    ----
+caesar(25) cat
 ```
 
 Good luck! 🍀
 
 ## TODOs
 
-- [ ] Add word deciphering filter.
+- [ ] Add support for filtering phrases in the same way words are currently filtered.
+- [ ] Add support for initials.
+- [ ] Add some more interesting word manipulations.
+- [ ] Add support for a number of interesting ciphers.
+- [ ] Rustle up interesting lists - names of things, groups of things, etc.
 - [ ] Explore use of [WordNet](https://wordnet.princeton.edu/download/current-version) and include definitions and semantics for cool new filters.
-

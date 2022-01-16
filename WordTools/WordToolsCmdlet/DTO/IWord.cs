@@ -1,7 +1,7 @@
 ﻿using System;
 namespace WordToolsCmdlet.DTO
 {
-    public interface IWord
+    public interface IWord : IComparable
     {
         public string Text { get; }
     }
